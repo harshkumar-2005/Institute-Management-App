@@ -170,7 +170,7 @@ router.get(
 router.get(
   "/branches/:id",
   authMiddleware,
-  authorizeRoles("ADMIN", "TEACHER"),
+  authorizeRoles("ADMIN", "TEACHER", "STAFF", "STUDENT"),
   getBranchById,
 );
 
@@ -191,14 +191,14 @@ router.delete(
 router.get(
   "/departments/:id",
   authMiddleware,
-  authorizeRoles("ADMIN", "TEACHER"),
+  authorizeRoles("ADMIN", "TEACHER", "STAFF", "STUDENT"),
   getDepartmentById,
 );
 
 router.get(
   "/subjects/:id",
   authMiddleware,
-  authorizeRoles("ADMIN", "TEACHER"),
+  authorizeRoles("ADMIN", "TEACHER", "STAFF", "STUDENT"),
   getSubjectById,
 );
 
