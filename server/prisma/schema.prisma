@@ -97,8 +97,11 @@ model StudentProfile {
   userId String @unique
   user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
 
-  uid    String @unique @db.VarChar(50)
-  rollNo String @unique
+  uid          String  @unique @db.VarChar(50)
+  rollNo       String  @unique
+  collegeEmail String  @unique @default("") @db.VarChar(100)
+  studentPhone String?
+  parentPhone  String?
 
   branchId           Int
   departmentId       Int
