@@ -1,7 +1,7 @@
 import { S3Client } from "@aws-sdk/client-s3";
 import envConfig from "../config/env.config.js";
 
-const s3 = new S3Client({
+const Client = new S3Client({
   region: envConfig.AWS_REGION,
   credentials: {
     accessKeyId: envConfig.AWS_ACCESS_KEY_ID!,
@@ -9,4 +9,4 @@ const s3 = new S3Client({
   },
 });
 
-export default s3;
+export default Client;
