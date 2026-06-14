@@ -1,24 +1,29 @@
-// uploadFileToS3()
-// deleteFileFromS3()
-// generateSignedUrl()
+import envConfig from "../../../config/env.config.js";
+import Client from "../../../lib/S3.client.js";
+import { PutObjectCommand } from "@aws-sdk/client-s3";
+import { getSignedUrl } from "@aws-sdk/s3-request-presigner";
 
-// ONE backend IAM policy
-// ONE backend IAM user/role
-// ONE private S3 bucket
+const putObject = async (key: string, contentType: string) => {
+  try {
+    const command = new PutObjectCommand({
+      Bucket:
+        envConfig.AWS_BUCKET_NAME || "IMS-454034543634234323-ap-south-1-an",
+      Key: key,
+      ContentType: contentType,
+    });
 
-// Then your backend decides:
+    const url = await getSignedUrl(Client, command, { expiresIn: 1800 }); // 1800 second = 30 minutes
 
-// who can upload
-// who can delete
-// who can read
+    return url;
+  } catch (error: any) {
+    return new Error(error.message);
+  }
+};
 
-// using:
-// JWT + database roles + middleware
+export default putObject;
 
-// assignments/
-// notes/
-// submissions/
-// profile-images/
-// notices/
-
-// assignments/cse/dbms/assignment1.pdf
+// example to use:-
+// await putObject(`assignments/image-${Date.now()}.jpg`, "image/jpeg");
+// output:
+// url
+// use postman and `put` request on that `url`
